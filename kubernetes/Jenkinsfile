@@ -1,5 +1,12 @@
 def label = "worker-${UUID.randomUUID().toString()}"
 
+def notifySlack(STATUS, COLOR) {
+	slackSend channel: '#{'jenkins-alarm-test-yhlee04'} ', 
+		message: STATUS+" : " + "${env.JOB_NAME}[${env.BUILD_NUMBER}] (${env.BUILD_URL})", 
+		color: COLOR,
+		tokenCredentialId: '{'Slack-lab21'} ', teamDomain: '{'tech'}'
+}
+
 // Slack 알림
 
 podTemplate(label: label, containers: [
@@ -16,6 +23,11 @@ podTemplate(label: label, containers: [
 	// 예외처리 구문
 	try {
 		// Slack - 빌드 시작시
+		notifySlack("STARTED", "#0000FF")
+		// Slack - 빌드 성공시
+		notifySlack("SUCCESS", "#00FF00")
+		// Slack - 빌드 실패시
+		notifySlack("FAILED", "#FF0000")
 
 		// #1 Github 소스 가져오기
 		stage('Get Source') {

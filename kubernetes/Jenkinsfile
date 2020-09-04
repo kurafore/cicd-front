@@ -1,10 +1,11 @@
 def label = "worker-${UUID.randomUUID().toString()}"
 
 def notifySlack(STATUS, COLOR) {
-	slackSend channel: '#{'jenkins-alarm-test-yhlee04'} ', 
+	slackSend channel: 'jenkins-alarm-test-yhlee04', 
 		message: STATUS+" : " + "${env.JOB_NAME}[${env.BUILD_NUMBER}] (${env.BUILD_URL})", 
 		color: COLOR,
-		tokenCredentialId: '{'Slack-lab21'} ', teamDomain: '{'tech'}'
+		tokenCredentialId: 'Slack-lab21', 
+		teamDomain: 'tech'
 }
 
 // Slack 알림
